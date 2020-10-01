@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div>
+        <h1 class="display3">Hot Restaurant</h1>
+        <hr class="my-hr" />
+        <button type="button" class="btn btn-primary btn-lg">
+          View Tables
+        </button>
+        <button type="button" class="btn btn-secondary btn-lg">
+          Make Reservation
+        </button>
+      </div>
+    </div>
+    <div class="container-md">
+      <form role="form">
+        <div class="form-group">
+          <label for="res-name">Name</label>
+          <input type="text" class="form-control" id="reserve-name" />
+        </div>
+        <div class="form-group">
+          <label for="res-phone">Phone Number</label>
+          <input type="text" class="form-control" id="reserve-phone" />
+        </div>
+        <div class="form-group">
+          <label for="res-email">Email</label>
+          <input type="text" class="form-control" id="reserve-email" />
+        </div>
+        <div class="form-group">
+          <label for="res-id">Unique ID</label>
+          <input type="text" class="form-control" id="reserve-unique-id" />
+        </div>
+        <button type="submit" class="btn btn-primary submit">Submit</button>
+      </form>
+    </div>
+    <script type="text/javascript">
+        // On click function 
+        $(".submit").on("click", function(){
+            // Gets elements from form
+            const newReservation = {
+               name: $('#reserve-name').val().trim(),
+               number: $('#reserve-phone').val().trim(),
+               email: $('#reserve-email').val().trim(),
+               id: $('#reserve-unique-id').val().trim(),
+            };
+            console.log(newReservation);
+            // Root location
+            var currentURL = window.location.origin;
+            $.post(currentURL + "/api/new", newReservation, function(data){
+                if(data == true){
+                    alert("Your table is booked!")
+                }
+                if(data == false) {
+                    alert("Sorry, all tables are full. You have been added to the waitlist.")
+                }
+                // Clears form
+                $('#reserve-name').val("");
+                $('#reserve-phone').val("");
+                $('#reserve-email').val("");
+                $('#reserve-unique-id').val("");  
+            });
+            return false;
+        })
+    </script>
+  </body>
+</html>  
